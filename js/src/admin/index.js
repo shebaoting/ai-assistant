@@ -12,7 +12,7 @@ app.initializers.add('shebaoting/ai-assistant', () => {
             setting: 'shebaoting-ai-assistant.model',
             label: '模型',
             type: 'text',
-            placeholder: 'ep-20240913141619-cbttf',
+            placeholder: '请输入模型ID',
         })
         .registerSetting({
             setting: 'shebaoting-ai-assistant.system_prompt',

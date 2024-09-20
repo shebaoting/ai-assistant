@@ -81,7 +81,7 @@ class GenerateAIReply implements ShouldQueue
     protected function createAIReply(Dispatcher $bus, UserRepository $users, $content)
     {
         // 获取或创建 AI 用户
-        $aiUser = $users->findOrFail(2); // 确保用户 ID 正确，或更改为专用 AI 用户 ID
+        $aiUser = $users->findOrFail(993); // 确保用户 ID 正确，或更改为专用 AI 用户 ID
 
         // 为回复内容添加 AI 标识（可选，现已通过前端添加标签）
         // $content .= "\n\n*此回复由AI生成*";

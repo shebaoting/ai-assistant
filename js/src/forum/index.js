@@ -5,7 +5,7 @@ import Post from 'flarum/forum/components/Post';
 app.initializers.add('shebaoting/ai-assistant', () => {
 
   extend(Post.prototype, 'view', function (vdom) {
-    const aiUserId = 2; // 替换为您的 AI 用户 ID
+    const aiUserId = 993; // 替换为您的 AI 用户 ID
 
     // 正确访问用户 ID，使用 user() 方法并调用 id()
     const author = this.attrs.post.user();
