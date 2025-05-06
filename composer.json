@@ -1,6 +1,7 @@
 {
     "name": "shebaoting/ai-assistant",
     "description": "A Flarum extension that uses AI for automatic replies",
+    "version": "v0.1.0",
     "keywords": [
         "flarum"
     ],
