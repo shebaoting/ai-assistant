@@ -19,17 +19,27 @@ class DiscussionStartedListener
     public function handle(Started $event)
     {
         $discussion = $event->discussion;
+        $firstPost = $discussion->firstPost; // 通常可以直接获取，Flarum 会处理加载
 
-        // 显式加载首个帖子
-        $firstPost = Post::where('discussion_id', $discussion->id)
-            ->where('number', 1)
-            ->first();
+        if ($firstPost) {
+            $mentionedUsers = $firstPost->mentionsUsers; // 获取被提及的用户集合
+            $shouldTriggerAi = false;
+            $targetUserId = 993;
 
-        if ($firstPost && strpos($firstPost->content, '@乌鸦') !== false) {
-            $content = str_replace('@乌鸦', '', $firstPost->content);
+            foreach ($mentionedUsers as $mentionedUser) {
+                if ($mentionedUser->id == $targetUserId) {
+                    $shouldTriggerAi = true;
+                    break;
+                }
+            }
 
-            // 分发队列任务
-            $this->bus->dispatch(new GenerateAIReply($discussion->id, $content));
+            if ($shouldTriggerAi) {
+                $content = preg_replace('/<USERMENTION[^>]*id="' . $targetUserId . '"[^>]*>@[^<]+<\/USERMENTION>\s*/i', '', $firstPost->content);
+                $content = trim($content);
+                if (!empty($content)) {
+                    $this->bus->dispatch(new GenerateAIReply($discussion->id, $content));
+                }
+            }
         }
     }
 }
